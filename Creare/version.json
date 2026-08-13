@@ -1,6 +1,6 @@
 {
   "version": "1.0.6",
-  "changelog": "� Correção: erro de sintaxe removido",
+  "changelog": "Popup so aparece uma vez + CSS aplicado instantaneamente",
   "releaseDate": "2026-08-13",
   "files": [
     "content.js",
@@ -10,5 +10,5 @@
     "updater.js"
   ],
   "minVersion": "1.0.0",
-  "notes": "CSS atualiza instantaneamente, JS atualiza ao dar F5 na página"
+  "notes": "Sistema funcionando: popup aparece 1x, depois so ao dar F5"
 }
