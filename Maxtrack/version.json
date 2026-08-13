@@ -1,0 +1,15 @@
+{
+  "version": "1.1.0",
+  "changelog": "Sistema de auto-update implementado: verifica ao recarregar o site",
+  "releaseDate": "2026-08-13",
+  "files": [
+    "content.js",
+    "page-reader.js",
+    "styles.css",
+    "manifest.json",
+    "updater.js",
+    "background.js"
+  ],
+  "minVersion": "1.1.0",
+  "notes": "Verifica atualizações apenas ao recarregar o site (mais leve)"
+}
