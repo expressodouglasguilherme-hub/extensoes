@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Creare - Colinha",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Colinha da Creare: copia informações de alertas com emojis, cola textos padrão e grupos de emails. Criado por Douglas G.",
   "author": "Douglas G.",
   "permissions": [

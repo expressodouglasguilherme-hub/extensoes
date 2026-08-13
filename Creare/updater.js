@@ -226,7 +226,6 @@ class ExtensionUpdater {
       // JS será aplicado no próximo reload da PÁGINA (não da extensão)
       const cssUpdated = files['styles.css'] ? true : false;
       const jsUpdated = files['content.js'] || files['textos-padrao.js'] || files['auto-click-invalidar.js'];
-      const needsReload = files['manifest.json'] || files['background.js'];
 
       if (needsReload) {
         console.log('⚠️ Arquivos de sistema foram atualizados');
