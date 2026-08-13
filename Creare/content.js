@@ -1,5 +1,5 @@
 // ============================================================
-// FUNÇÃO DE DEBUG - ENCONTRAR BOTÃO CONCLUIR
+// FUNÇÃO DE DEBUG - ENCONTRAR BOTÃO CONCLUIR1
 // Execute no console: debugConcluirButton()
 // ============================================================
 window.debugConcluirButton = function() {
