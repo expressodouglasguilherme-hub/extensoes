@@ -1,0 +1,12 @@
+{
+  "version": "2.3.0",
+  "changelog": "🚀 Atualização automática e dinâmica! Scripts aplicados instantaneamente sem reload",
+  "releaseDate": "2026-08-13",
+  "files": [
+    "content.js",
+    "styles.css",
+    "updater.js"
+  ],
+  "minVersion": "2.2.2",
+  "notes": "Injeta código JavaScript e CSS dinamicamente - atualizações instantâneas!"
+}

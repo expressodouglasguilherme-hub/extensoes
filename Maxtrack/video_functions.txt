@@ -1,0 +1,127 @@
+
+  // ========== MELHORIAS NO PLAYER DE VÍDEO ==========
+  
+  // Abre o vídeo em tela cheia automaticamente
+  function abrirVideoTelaCheia(video) {
+    // Marcar como já aberto para evitar duplicação
+    if (video.dataset.fullscreenOpened) return;
+    video.dataset.fullscreenOpened = 'true';
+    
+    // Criar overlay de tela cheia
+    const overlay = document.createElement('div');
+    overlay.className = 'maxtrack-video-fullscreen';
+    
+    // Clonar o vídeo
+    const videoClone = video.cloneNode(true);
+    videoClone.controls = true;
+    videoClone.autoplay = true;
+    videoClone.currentTime = video.currentTime;
+    
+    // Criar botão fechar
+    const btnClose = document.createElement('button');
+    btnClose.className = 'maxtrack-close-fullscreen';
+    btnClose.innerHTML = '✕';
+    btnClose.title = 'Fechar (ESC)';
+    
+    const fecharTelaCheia = () => {
+      if (document.body.contains(overlay)) {
+        document.body.removeChild(overlay);
+        video.dataset.fullscreenOpened = 'false';
+      }
+    };
+    
+    btnClose.addEventListener('click', fecharTelaCheia);
+    
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        fecharTelaCheia();
+        document.removeEventListener('keydown', handleEsc);
+      }
+    };
+    document.addEventListener('keydown', handleEsc);
+    
+    overlay.appendChild(videoClone);
+    overlay.appendChild(btnClose);
+    document.body.appendChild(overlay);
+    videoClone.focus();
+    
+    console.log('🎬 Vídeo aberto em tela cheia automaticamente');
+    showNotification('🎬 Vídeo em tela cheia', 'success', 'Pressione ESC para fechar');
+  }
+
+  function melhorarVideos() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+      if (!video.dataset.autoFullscreenProcessed) {
+        video.dataset.autoFullscreenProcessed = 'true';
+        if (video.readyState >= 2) {
+          abrirVideoTelaCheia(video);
+        } else {
+          video.addEventListener('loadeddata', () => {
+            abrirVideoTelaCheia(video);
+          }, { once: true });
+          setTimeout(() => {
+            if (!video.dataset.fullscreenOpened) {
+              abrirVideoTelaCheia(video);
+            }
+          }, 1000);
+        }
+        console.log('🎬 Vídeo detectado - abrindo em tela cheia automaticamente');
+      }
+    });
+  }
+
+  function observarVideos() {
+    melhorarVideos();
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === 1) {
+            if (node.tagName === 'VIDEO') {
+              setTimeout(() => {
+                if (!node.dataset.autoFullscreenProcessed) {
+                  node.dataset.autoFullscreenProcessed = 'true';
+                  if (node.readyState >= 2) {
+                    abrirVideoTelaCheia(node);
+                  } else {
+                    node.addEventListener('loadeddata', () => {
+                      abrirVideoTelaCheia(node);
+                    }, { once: true });
+                    setTimeout(() => {
+                      if (!node.dataset.fullscreenOpened || node.dataset.fullscreenOpened === 'false') {
+                        abrirVideoTelaCheia(node);
+                      }
+                    }, 1000);
+                  }
+                }
+              }, 300);
+            } else if (node.querySelector) {
+              const videos = node.querySelectorAll('video');
+              videos.forEach(video => {
+                setTimeout(() => {
+                  if (!video.dataset.autoFullscreenProcessed) {
+                    video.dataset.autoFullscreenProcessed = 'true';
+                    if (video.readyState >= 2) {
+                      abrirVideoTelaCheia(video);
+                    } else {
+                      video.addEventListener('loadeddata', () => {
+                        abrirVideoTelaCheia(video);
+                      }, { once: true });
+                      setTimeout(() => {
+                        if (!video.dataset.fullscreenOpened || video.dataset.fullscreenOpened === 'false') {
+                          abrirVideoTelaCheia(video);
+                        }
+                      }, 1000);
+                    }
+                  }
+                }, 300);
+              });
+            }
+          }
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    setInterval(melhorarVideos, 3000);
+    console.log('👁️ Observador de vídeos ativado - modo tela cheia automático');
+  }
