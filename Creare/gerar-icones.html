@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Ícones - Creare Colinha</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #764ba2 55%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            max-width: 640px;
+            width: 100%;
+        }
+        h1 { color: #333; margin-bottom: 6px; font-size: 28px; }
+        .subtitle { color: #764ba2; font-weight: bold; margin-bottom: 26px; font-size: 15px; }
+        .btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            margin: 14px 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(106, 17, 203, 0.55); }
+        .preview { display: flex; gap: 20px; justify-content: center; margin: 26px 0; flex-wrap: wrap; }
+        .icon-box { text-align: center; }
+        .icon-box h3 { color: #764ba2; margin-bottom: 10px; font-size: 14px; }
+        canvas { border: 2px solid #eee; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: #fafafa; }
+        .download-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 8px 16px; font-size: 14px; margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+        }
+        .success {
+            background: #38ef7d; color: #0a3d2c; padding: 15px; border-radius: 12px;
+            margin: 16px 0; display: none; text-align: center; font-weight: bold;
+        }
+        .instructions {
+            background: #f5f5fb; padding: 20px; border-radius: 12px; margin: 20px 0;
+            border-left: 4px solid #764ba2;
+        }
+        .instructions h3 { color: #764ba2; margin-bottom: 10px; }
+        .instructions ol { padding-left: 20px; }
+        .instructions li { margin: 8px 0; line-height: 1.6; }
+        code { background: #eae6f7; padding: 2px 6px; border-radius: 5px; color: #6a11cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Gerador de Ícones</h1>
+        <p class="subtitle">Creare - Colinha • por Douglas G.</p>
+
+        <div class="instructions">
+            <h3>📋 Como usar:</h3>
+            <ol>
+                <li>Clique em <b>"Gerar Ícones"</b></li>
+                <li>Clique em <b>"⬇️ Baixar Todos"</b> (ou baixe um por um)</li>
+                <li>Salve os arquivos na pasta <code>copy-alert-extension</code>, substituindo os antigos</li>
+                <li>Recarregue a extensão em <code>chrome://extensions/</code></li>
+            </ol>
+        </div>
+
+        <button class="btn" onclick="gerarIcones()">🚀 Gerar Ícones</button>
+        <button class="btn download-btn" style="width:100%" onclick="baixarTodos()">⬇️ Baixar Todos</button>
+
+        <div class="success" id="success">✅ Ícones gerados com sucesso!</div>
+
+        <div class="preview" id="preview"></div>
+    </div>
+
+    <script>
+        const SIZES = [16, 48, 128];
+
+        // Polyfill para roundRect
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                this.beginPath();
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                this.closePath();
+                return this;
+            };
+        }
+
+        // Desenha o ícone da "colinha" em qualquer tamanho
+        function drawIcon(ctx, size) {
+            const f = size / 128; // fator de escala
+            ctx.clearRect(0, 0, size, size);
+
+            // Fundo com gradiente vibrante
+            const bg = ctx.createLinearGradient(0, 0, size, size);
+            bg.addColorStop(0, '#6a11cb');
+            bg.addColorStop(0.55, '#764ba2');
+            bg.addColorStop(1, '#2575fc');
+            ctx.fillStyle = bg;
+            ctx.roundRect(0, 0, size, size, 28 * f);
+            ctx.fill();
+
+            // Brilho superior
+            const gloss = ctx.createLinearGradient(0, 0, 0, 64 * f);
+            gloss.addColorStop(0, 'rgba(255,255,255,0.25)');
+            gloss.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = gloss;
+            ctx.roundRect(0, 0, size, 64 * f, 28 * f);
+            ctx.fill();
+
+            // Card de trás (inclinado)
+            ctx.save();
+            ctx.translate(64 * f, 64 * f);
+            ctx.rotate(-8 * Math.PI / 180);
+            ctx.translate(-64 * f, -64 * f);
+            ctx.fillStyle = 'rgba(255,255,255,0.35)';
+            ctx.roundRect(34 * f, 26 * f, 60 * f, 76 * f, 10 * f);
+            ctx.fill();
+            ctx.restore();
+
+            // Card da frente (com sombra)
+            ctx.save();
+            ctx.shadowColor = 'rgba(0,0,0,0.35)';
+            ctx.shadowBlur = 8 * f;
+            ctx.shadowOffsetY = 4 * f;
+            ctx.fillStyle = '#ffffff';
+            ctx.roundRect(30 * f, 30 * f, 64 * f, 76 * f, 11 * f);
+            ctx.fill();
+            ctx.restore();
+
+            // Aba do topo
+            ctx.fillStyle = '#e8e8f5';
+            ctx.strokeStyle = '#d0d0e6';
+            ctx.lineWidth = 1.5 * f;
+            ctx.roundRect(47 * f, 24 * f, 30 * f, 12 * f, 6 * f);
+            ctx.fill();
+            ctx.stroke();
+
+            // Linhas coloridas (textos/emails prontos)
+            const linhas = [
+                { y: 50, x2: 82, cor: '#6a11cb' },
+                { y: 63, x2: 74, cor: '#f5576c' },
+                { y: 76, x2: 82, cor: '#2575fc' },
+                { y: 89, x2: 68, cor: '#38ef7d' }
+            ];
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 5 * f;
+            linhas.forEach(l => {
+                ctx.strokeStyle = l.cor;
+                ctx.beginPath();
+                ctx.moveTo(42 * f, l.y * f);
+                ctx.lineTo(l.x2 * f, l.y * f);
+                ctx.stroke();
+            });
+
+            // Selo de check (canto inferior direito)
+            const cx = 96 * f, cy = 96 * f, r = 20 * f;
+            const cg = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+            cg.addColorStop(0, '#11998e');
+            cg.addColorStop(1, '#38ef7d');
+            ctx.fillStyle = cg;
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 4 * f;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Checkmark
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 5 * f;
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(87 * f, 96 * f);
+            ctx.lineTo(94 * f, 103 * f);
+            ctx.lineTo(106 * f, 89 * f);
+            ctx.stroke();
+        }
+
+        function gerarIcones() {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+
+            SIZES.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                drawIcon(canvas.getContext('2d'), size);
+
+                const box = document.createElement('div');
+                box.className = 'icon-box';
+                const h3 = document.createElement('h3');
+                h3.textContent = `${size}x${size}`;
+                const btn = document.createElement('button');
+                btn.className = 'btn download-btn';
+                btn.textContent = '⬇️ Baixar';
+                btn.onclick = () => baixarIcone(`icon${size}.png`, size);
+
+                box.appendChild(h3);
+                box.appendChild(canvas);
+                box.appendChild(document.createElement('br'));
+                box.appendChild(btn);
+                preview.appendChild(box);
+            });
+
+            document.getElementById('success').style.display = 'block';
+        }
+
+        function baixarIcone(filename, size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            drawIcon(canvas.getContext('2d'), size);
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        function baixarTodos() {
+            if (!document.getElementById('preview').hasChildNodes()) gerarIcones();
+            SIZES.forEach((size, i) => {
+                setTimeout(() => baixarIcone(`icon${size}.png`, size), i * 400);
+            });
+        }
+    </script>
+</body>
+</html>

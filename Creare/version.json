@@ -1,0 +1,16 @@
+{
+  "version": "1.0.1",
+  "changelog": "Sistema de auto-update otimizado: verifica a cada 15 minutos e ao carregar a página",
+  "releaseDate": "2026-08-13",
+  "files": [
+    "content.js",
+    "textos-padrao.js",
+    "auto-click-invalidar.js",
+    "styles.css",
+    "manifest.json",
+    "updater.js",
+    "background.js"
+  ],
+  "minVersion": "1.0.0",
+  "notes": "Atualização mais rápida: 15 minutos ao invés de 6 horas"
+}
