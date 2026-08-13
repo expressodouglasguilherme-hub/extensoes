@@ -183,7 +183,7 @@ class ExtensionUpdater {
       }
 
       // ========================================
-      // PASSO 2: Aplicar JavaScript instantaneamente
+      // PASSO 2: Salvar arquivos JS para próxima execução
       // ========================================
       const jsFiles = [
         'textos-padrao.js',
@@ -191,34 +191,27 @@ class ExtensionUpdater {
         'auto-click-invalidar.js'
       ];
 
+      // Conta arquivos JS atualizados
+      let jsFilesUpdated = 0;
       for (const jsFile of jsFiles) {
         if (files[jsFile]) {
-          console.log(`⚡ Injetando ${jsFile}...`);
-          
-          try {
-            // Remove script antigo se existir
-            const oldScript = document.querySelector(`script[data-creare-file="${jsFile}"]`);
-            if (oldScript) {
-              oldScript.remove();
-            }
-
-            // Cria novo script
-            const scriptElement = document.createElement('script');
-            scriptElement.setAttribute('data-creare-file', jsFile);
-            scriptElement.textContent = files[jsFile];
-            
-            // Injeta no documento
-            (document.head || document.documentElement).appendChild(scriptElement);
-            
-            console.log(`✅ ${jsFile} injetado!`);
-            
-            // Remove o script tag após execução (mantém o código rodando)
-            setTimeout(() => scriptElement.remove(), 100);
-            
-          } catch (error) {
-            console.error(`❌ Erro ao injetar ${jsFile}:`, error);
-          }
+          jsFilesUpdated++;
+          console.log(`💾 ${jsFile} salvo para próxima execução`);
         }
+      }
+
+      // Salva os arquivos JS atualizados no chrome.storage
+      if (jsFilesUpdated > 0) {
+        await chrome.storage.local.set({
+          updatedScripts: {
+            version: version,
+            files: Object.fromEntries(
+              jsFiles.filter(f => files[f]).map(f => [f, files[f]])
+            ),
+            timestamp: Date.now()
+          }
+        });
+        console.log(`✅ ${jsFilesUpdated} arquivos JS salvos no storage`);
       }
 
       // ========================================
@@ -229,20 +222,36 @@ class ExtensionUpdater {
       console.log('✅ Atualização aplicada com sucesso!');
       console.log('📋 Changelog:', changelog);
 
+      // CSS foi aplicado instantaneamente
+      // JS será aplicado no próximo reload da PÁGINA (não da extensão)
+      const cssUpdated = files['styles.css'] ? true : false;
+      const jsUpdated = files['content.js'] || files['textos-padrao.js'] || files['auto-click-invalidar.js'];
+      const needsReload = files['manifest.json'] || files['background.js'];
+
       if (needsReload) {
         console.log('⚠️ Arquivos de sistema foram atualizados');
         console.log('💡 Recarregue a extensão em chrome://extensions para aplicar completamente');
         
-        // Mostra notificação pedindo reload apenas se necessário
         this.showNotification(
           `Creare v${version} - Quase pronto!`,
           'Scripts atualizados! Para aplicar mudanças no sistema, recarregue a extensão. ' + changelog
         );
-      } else {
-        // Atualização completa sem precisar reload!
+      } else if (cssUpdated && !jsUpdated) {
+        // Só CSS mudou - aplicado instantaneamente
         this.showNotification(
           `🎉 Creare v${version} atualizado!`,
-          'Atualização aplicada automaticamente! ' + changelog
+          'Estilos atualizados instantaneamente! ' + changelog
+        );
+      } else if (jsUpdated) {
+        // JS mudou - precisa reload da PÁGINA
+        this.showNotification(
+          `🔄 Creare v${version} - Recarregue a página!`,
+          'Atualizações baixadas! Recarregue esta página (F5) para aplicar. ' + changelog
+        );
+      } else {
+        this.showNotification(
+          `🎉 Creare v${version} atualizado!`,
+          'Atualização aplicada! ' + changelog
         );
       }
 
@@ -275,6 +284,7 @@ class ExtensionUpdater {
 
     // Detecta se precisa de reload manual (baseado no título)
     const needsManualReload = title.includes('Quase pronto');
+    const needsPageReload = title.includes('Recarregue a página');
     const isSuccess = title.includes('atualizado!');
 
     // Cria popup
@@ -345,6 +355,90 @@ class ExtensionUpdater {
           transition: all 0.2s;
         ">
           Entendi! 🎉
+        </button>
+      </div>
+    ` : needsPageReload ? `
+      <div style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: white;
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        z-index: 999999;
+        max-width: 420px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        animation: slideIn 0.4s ease-out;
+      ">
+        <!-- Header -->
+        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+          <span style="font-size: 40px; margin-right: 12px;">🔄</span>
+          <div style="flex: 1;">
+            <strong style="font-size: 20px; display: block; margin-bottom: 4px;">${title}</strong>
+            <span style="font-size: 12px; opacity: 0.9;">Última etapa</span>
+          </div>
+          <button id="creare-popup-close" style="
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+            transition: all 0.2s;
+          ">×</button>
+        </div>
+
+        <!-- Mensagem -->
+        <div style="
+          background: rgba(255,255,255,0.15);
+          padding: 16px;
+          border-radius: 12px;
+          margin-bottom: 16px;
+          backdrop-filter: blur(10px);
+        ">
+          <p style="margin: 0; font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+            ${message}
+          </p>
+          <p style="margin: 0; font-size: 13px; opacity: 0.9;">
+            💡 Aperte <strong>F5</strong> ou <strong>Ctrl+R</strong> para recarregar
+          </p>
+        </div>
+
+        <!-- Botão Recarregar -->
+        <button id="creare-popup-reload" style="
+          background: white;
+          color: #1d4ed8;
+          border: none;
+          padding: 14px 20px;
+          border-radius: 10px;
+          font-weight: 700;
+          cursor: pointer;
+          font-size: 15px;
+          width: 100%;
+          transition: all 0.2s;
+          margin-bottom: 8px;
+        ">
+          🔄 Recarregar agora
+        </button>
+        
+        <button id="creare-popup-later" style="
+          background: transparent;
+          color: white;
+          border: 2px solid rgba(255,255,255,0.3);
+          padding: 10px 20px;
+          border-radius: 10px;
+          font-weight: 600;
+          cursor: pointer;
+          font-size: 13px;
+          width: 100%;
+          transition: all 0.2s;
+        ">
+          Recarregar depois
         </button>
       </div>
     ` : `
@@ -450,7 +544,7 @@ class ExtensionUpdater {
           width: 100%;
           transition: all 0.2s;
         ">
-          ${needsManualReload ? 'Atualizar depois' : 'Fechar'}
+          ${needsManualReload ? 'Atualizar depois' : needsPageReload ? 'Recarregar depois' : 'Fechar'}
         </button>
       </div>
     `;
@@ -484,6 +578,11 @@ class ExtensionUpdater {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(0,0,0,0.2);
       }
+      #creare-popup-reload:hover {
+        background: #dbeafe !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      }
       #creare-popup-later:hover {
         background: rgba(255,255,255,0.1) !important;
         border-color: rgba(255,255,255,0.5);
@@ -508,6 +607,14 @@ class ExtensionUpdater {
       okBtn.addEventListener('click', () => {
         popup.style.animation = 'slideIn 0.3s ease-out reverse';
         setTimeout(() => popup.remove(), 300);
+      });
+    }
+
+    // Botão Recarregar (para reload de página)
+    const reloadBtn = document.getElementById('creare-popup-reload');
+    if (reloadBtn) {
+      reloadBtn.addEventListener('click', () => {
+        location.reload();
       });
     }
 

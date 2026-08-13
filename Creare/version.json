@@ -1,6 +1,6 @@
 {
-  "version": "1.0.3",
-  "changelog": "🚀 Atualização automática e dinâmica! Scripts aplicados instantaneamente sem reload",
+  "version": "1.0.4",
+  "changelog": "🔄 Sistema corrigido: CSS instantâneo + JS aplicado ao recarregar página (F5)",
   "releaseDate": "2026-08-13",
   "files": [
     "content.js",
@@ -10,5 +10,5 @@
     "updater.js"
   ],
   "minVersion": "1.0.0",
-  "notes": "Injeta código JavaScript e CSS dinamicamente - atualizações instantâneas!"
+  "notes": "CSS atualiza instantaneamente, JS atualiza ao dar F5 na página (sem precisar recarregar extensão)"
 }
