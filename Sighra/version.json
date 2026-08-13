@@ -1,0 +1,14 @@
+{
+  "version": "2.2.2",
+  "changelog": "Sistema de auto-update implementado: verifica a cada 15 minutos",
+  "releaseDate": "2026-08-13",
+  "files": [
+    "manifest.json",
+    "content.js",
+    "background.js",
+    "updater.js",
+    "styles.css"
+  ],
+  "minVersion": "2.2.2",
+  "notes": "Auto-update ativo! Atualizações automáticas via GitHub."
+}

@@ -1,0 +1,775 @@
+/* Estilos para o botão do Maxtrack WhatsApp Helper */
+
+/* Botão inline (dentro de cada linha) */
+.maxtrack-whatsapp-btn-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(37, 211, 102, 0.3);
+  margin-right: 6px;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.maxtrack-whatsapp-btn-inline:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 10px rgba(37, 211, 102, 0.5);
+  background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+}
+
+.maxtrack-whatsapp-btn-inline:active {
+  transform: scale(0.95);
+}
+
+.maxtrack-whatsapp-btn-inline svg {
+  width: 16px;
+  height: 16px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+}
+
+/* Botão antigo (manter para compatibilidade) */
+.maxtrack-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 9999;
+}
+
+.maxtrack-whatsapp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+}
+
+.maxtrack-whatsapp-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(37, 211, 102, 0.3);
+}
+
+.maxtrack-whatsapp-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Estilo para botão flutuante (fallback) */
+.maxtrack-whatsapp-btn.floating {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Notificações */
+.maxtrack-whatsapp-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  z-index: 2147483647;
+  opacity: 0;
+  transform: translateX(400px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-width: 350px;
+}
+
+.maxtrack-whatsapp-notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.maxtrack-whatsapp-notification.success {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+}
+
+.maxtrack-whatsapp-notification.error {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+.maxtrack-whatsapp-notification.warning {
+  background: linear-gradient(135deg, #ffd93d 0%, #ff9f1c 100%);
+  color: #333;
+}
+
+.maxtrack-whatsapp-notification-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.maxtrack-whatsapp-notification-sub {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
+  opacity: 0.85;
+}
+
+/* Estilo para linha selecionada */
+tr.last-clicked {
+  background-color: rgba(37, 211, 102, 0.1) !important;
+  outline: 2px solid rgba(37, 211, 102, 0.3);
+}
+
+/* Estilo para linha com hover (indicador sutil) */
+#event-process-table-ALL tr.hover-active {
+  background-color: rgba(37, 211, 102, 0.15) !important;
+  box-shadow: inset 0 0 0 2px rgba(37, 211, 102, 0.4);
+  transition: all 0.2s ease;
+}
+
+/* Botão de atualização de datas - Estilo normal de botão */
+#maxtrack-date-updater-btn {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 6px 12px !important;
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%) !important;
+  color: white !important;
+  border: 1px solid #357abd !important;
+  border-radius: 4px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.3) !important;
+}
+
+#maxtrack-date-updater-btn:hover {
+  background: linear-gradient(135deg, #5ba0f2 0%, #4a90e2 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 6px rgba(74, 144, 226, 0.4) !important;
+}
+
+#maxtrack-date-updater-btn:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 1px 3px rgba(74, 144, 226, 0.3) !important;
+}
+
+#maxtrack-date-updater-btn i {
+  vertical-align: middle;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .maxtrack-whatsapp-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .maxtrack-whatsapp-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .maxtrack-whatsapp-notification {
+    max-width: 280px;
+    font-size: 13px;
+    padding: 12px 18px;
+  }
+  
+  .maxtrack-date-updater-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+}
+
+/* ========== ESTILOS PARA PLAYER DE VÍDEO EM TELA CHEIA ========== */
+
+/* Container do vídeo em tela cheia */
+.maxtrack-video-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999999 !important;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(20, 20, 30, 0.98) 100%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  animation: fadeInOverlay 0.3s ease !important;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.maxtrack-video-fullscreen video {
+  width: 88vw !important;
+  height: 88vh !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  z-index: 999999999 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8) !important;
+  animation: scaleInVideo 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* ESCONDER controles nativos do navegador */
+.maxtrack-video-fullscreen video::-webkit-media-controls {
+  display: none !important;
+}
+
+.maxtrack-video-fullscreen video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+.maxtrack-video-fullscreen video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+.maxtrack-video-fullscreen video {
+  pointer-events: none !important; /* Desabilitar cliques diretos no vídeo */
+}
+
+@keyframes scaleInVideo {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Botão fechar tela cheia */
+.maxtrack-close-fullscreen {
+  position: fixed !important;
+  top: 24px !important;
+  right: 24px !important;
+  width: 56px !important;
+  height: 56px !important;
+  background: linear-gradient(135deg, rgba(255, 59, 48, 0.95), rgba(255, 89, 78, 0.95)) !important;
+  color: white !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  z-index: 9999999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 6px 20px rgba(255, 59, 48, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.maxtrack-close-fullscreen:hover {
+  background: linear-gradient(135deg, rgba(255, 69, 58, 1), rgba(255, 99, 88, 1)) !important;
+  transform: scale(1.15) rotate(90deg) !important;
+  box-shadow: 0 8px 25px rgba(255, 59, 48, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.maxtrack-close-fullscreen:active {
+  transform: scale(1.05) rotate(90deg) !important;
+}
+
+/* Container de controles personalizados */
+.maxtrack-video-controls {
+  position: fixed !important;
+  bottom: 40px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  z-index: 9999999999 !important;
+  background: rgba(20, 20, 30, 0.92) !important;
+  padding: 18px 28px !important;
+  border-radius: 50px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(25px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  animation: slideUpControls 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both !important;
+  opacity: 1 !important;
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+
+/* Esconder controles quando inativo */
+.maxtrack-video-fullscreen.controls-hidden .maxtrack-video-controls {
+  opacity: 0 !important;
+  transform: translateX(-50%) translateY(20px) !important;
+  pointer-events: none !important;
+}
+
+/* Manter info e progresso sempre visíveis */
+.maxtrack-video-fullscreen.controls-hidden .maxtrack-video-info,
+.maxtrack-video-fullscreen.controls-hidden .maxtrack-video-progress,
+.maxtrack-video-fullscreen.controls-hidden .maxtrack-close-fullscreen {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Botão Play/Pause personalizado */
+.maxtrack-video-play-btn {
+  width: 46px !important;
+  height: 46px !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 245, 0.95)) !important;
+  color: #1a1a2e !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+.maxtrack-video-play-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.98)) !important;
+  transform: scale(1.12) !important;
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+}
+
+.maxtrack-video-play-btn:active {
+  transform: scale(1.05) !important;
+}
+
+/* Botão retroceder 10s */
+.maxtrack-video-skip-btn {
+  width: 40px !important;
+  height: 40px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+
+.maxtrack-video-skip-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Tempo do vídeo nos controles */
+.maxtrack-video-time {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Courier New', monospace !important;
+  letter-spacing: 0.5px !important;
+  min-width: 90px !important;
+  text-align: center !important;
+}
+
+.maxtrack-video-time .current {
+  color: rgba(74, 144, 226, 1) !important;
+}
+
+/* Botão de velocidade */
+.maxtrack-video-speed-btn {
+  padding: 10px 18px !important;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.9), rgba(91, 160, 242, 0.9)) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3) !important;
+  min-width: 70px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  letter-spacing: 0.5px !important;
+}
+
+.maxtrack-video-speed-btn::before {
+  content: '⚡ ';
+  font-size: 16px !important;
+}
+
+.maxtrack-video-speed-btn:hover {
+  background: linear-gradient(135deg, rgba(91, 160, 242, 1), rgba(108, 175, 255, 1)) !important;
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.maxtrack-video-speed-btn:active {
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+/* Botão de volume */
+.maxtrack-video-volume-btn {
+  width: 40px !important;
+  height: 40px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+}
+
+.maxtrack-video-volume-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Botão fullscreen nativo */
+.maxtrack-video-fullscreen-btn {
+  width: 40px !important;
+  height: 40px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 18px !important;
+}
+
+.maxtrack-video-fullscreen-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+@keyframes slideUpControls {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Botão de download */
+.maxtrack-video-download-btn {
+  padding: 10px 20px !important;
+  background: linear-gradient(135deg, rgba(37, 211, 102, 0.9), rgba(46, 230, 115, 0.9)) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  letter-spacing: 0.5px !important;
+}
+
+.maxtrack-video-download-btn::before {
+  content: '';
+  font-size: 0 !important;
+}
+
+.maxtrack-video-download-btn:hover {
+  background: linear-gradient(135deg, rgba(46, 230, 115, 1), rgba(60, 240, 130, 1)) !important;
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.maxtrack-video-download-btn:active {
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+/* Botão de Print (capturar frame) */
+.maxtrack-video-print-btn {
+  padding: 10px 20px !important;
+  background: linear-gradient(135deg, rgba(255, 149, 0, 0.9), rgba(255, 179, 64, 0.9)) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3) !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  letter-spacing: 0.5px !important;
+}
+
+.maxtrack-video-print-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 179, 64, 1), rgba(255, 199, 95, 1)) !important;
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow: 0 6px 20px rgba(255, 149, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.maxtrack-video-print-btn:active {
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+/* Informações do vídeo (tempo) */
+.maxtrack-video-info {
+  position: fixed !important;
+  top: 24px !important;
+  left: 24px !important;
+  background: rgba(20, 20, 30, 0.85) !important;
+  color: white !important;
+  padding: 12px 20px !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Courier New', monospace !important;
+  z-index: 9999999999 !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  animation: fadeInInfo 0.4s ease 0.3s both !important;
+}
+
+@keyframes fadeInInfo {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.maxtrack-video-info span {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.maxtrack-video-info .current-time {
+  color: rgba(74, 144, 226, 1) !important;
+  font-weight: 700 !important;
+}
+
+.maxtrack-video-info .total-time {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Barra de progresso */
+.maxtrack-video-progress {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 5px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  z-index: 9999999999 !important;
+  cursor: pointer !important;
+  transition: height 0.2s ease !important;
+}
+
+.maxtrack-video-progress:hover {
+  height: 8px !important;
+}
+
+.maxtrack-video-progress-bar {
+  height: 100% !important;
+  background: linear-gradient(90deg, rgba(74, 144, 226, 1), rgba(91, 160, 242, 1), rgba(108, 175, 255, 1)) !important;
+  width: 0% !important;
+  transition: width 0.1s linear !important;
+  position: relative !important;
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.6) !important;
+}
+
+.maxtrack-video-progress-bar::after {
+  content: '' !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 12px !important;
+  height: 12px !important;
+  background: white !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.maxtrack-video-progress:hover .maxtrack-video-progress-bar::after {
+  opacity: 1 !important;
+}
+
+/* Separador visual entre botões */
+.maxtrack-video-controls-separator {
+  width: 1px !important;
+  height: 24px !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  margin: 0 4px !important;
+}
+
+/* ========== BOTÃO E MENU DE CONFIGURAÇÕES ========== */
+
+/* Botão de configurações */
+.maxtrack-config-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  height: 24px !important;
+  padding: 0 10px !important;
+  background: transparent !important;
+  color: #aaa !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  margin-left: 8px !important;
+  vertical-align: middle !important;
+  position: relative !important;
+  z-index: 1000 !important;
+  white-space: nowrap !important;
+}
+
+.maxtrack-config-btn:hover {
+  background: rgba(74, 144, 226, 0.15) !important;
+  color: #4a90e2 !important;
+  transform: scale(1.05) !important;
+}
+
+/* Menu de configurações */
+.maxtrack-config-menu {
+  position: fixed !important;
+  top: 60px !important;
+  right: 20px !important;
+  background: white !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+  min-width: 250px !important;
+  z-index: 999999 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.maxtrack-config-title {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%) !important;
+  color: white !important;
+  padding: 12px 16px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.maxtrack-config-item {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.maxtrack-config-item:last-of-type {
+  border-bottom: none !important;
+}
+
+.maxtrack-config-item label {
+  display: flex !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  gap: 10px !important;
+  color: #333 !important;
+  font-size: 13px !important;
+}
+
+.maxtrack-config-item input[type="checkbox"] {
+  width: 18px !important;
+  height: 18px !important;
+  cursor: pointer !important;
+}
+
+.maxtrack-config-footer {
+  background: #f8f8f8 !important;
+  padding: 8px 16px !important;
+  font-size: 11px !important;
+  color: #999 !important;
+  text-align: center !important;
+}
+
+/* ========== BOTÃO REABRIR TELA CHEIA ========== */
+
+.maxtrack-reabrir-fullscreen-btn {
+  margin-left: 10px !important;
+  padding: 6px 12px !important;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  transition: all 0.2s ease !important;
+  vertical-align: middle !important;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3) !important;
+}
+
+.maxtrack-reabrir-fullscreen-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #388e3c 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 6px rgba(76, 175, 80, 0.4) !important;
+}
+
+.maxtrack-reabrir-fullscreen-btn:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 1px 3px rgba(76, 175, 80, 0.3) !important;
+}
